@@ -33,8 +33,8 @@ public class ManaCrystalItem extends Item {
     private static final String USE_COUNT_TAG = "ManaCrystalUseCount";
     public static final String GLOBAL_USE_COUNT_TAG = "GlobalManaCrystalUseCount";
     private static final int MAX_USES = 10;
-    public static final double MANA_INCREASE = 10.0; // Adjust this value as needed
-    private static final long COOLDOWN_DURATION = 20; // 1 second in Minecraft ticks
+    public static final double MANA_INCREASE = 10.0;
+    private static final long COOLDOWN_DURATION = 20;
     private static final String LAST_USE_TAG = "ManaCrystalLastUseTime";
 
     public @Nonnull InteractionResultHolder<ItemStack> use(@Nonnull Level level, @Nonnull Player player, @Nonnull InteractionHand handIn) {
@@ -43,7 +43,6 @@ public class ManaCrystalItem extends Item {
 
         int stackUseCount = stackTag.getInt(USE_COUNT_TAG);
 
-        // Get the global use count from the player's data
         CompoundTag playerData = player.getPersistentData();
         CompoundTag modData = playerData.getCompound("ManaCrystalModData");
         int globalUseCount = modData.getInt(GLOBAL_USE_COUNT_TAG);
@@ -51,32 +50,27 @@ public class ManaCrystalItem extends Item {
 
         long currentTime = level.getGameTime();
         if (currentTime - lastUseTime < COOLDOWN_DURATION) {
-            // Send a message to the player on both sides
             return InteractionResultHolder.fail(stack);
         }
 
         if (globalUseCount < MAX_USES && !level.isClientSide) {
-            // Increase the global use count
             globalUseCount++;
             modData.putInt(GLOBAL_USE_COUNT_TAG, globalUseCount);
             playerData.put("ManaCrystalModData", modData);
             lastUseTime = currentTime;
             modData.putLong(LAST_USE_TAG, lastUseTime);
 
-            // Create a unique UUID for each modifier based on the global use count
             UUID uniqueUUID = UUID.nameUUIDFromBytes(("ManaCrystalManaIncrease" + globalUseCount).getBytes());
 
-            // Increase player's max mana
             Objects.requireNonNull(player.getAttributes().getInstance(AttributeRegistry.MAX_MANA.get())).addPermanentModifier(
                     new AttributeModifier(
                             uniqueUUID,
                             "ManaCrystalManaIncrease",
-                            MANA_INCREASE, // Increase the max mana by the specified amount
+                            MANA_INCREASE,
                             AttributeModifier.Operation.ADDITION
                     )
             );
 
-            // Optionally, remove the used mana crystal from the stack
             if (stackUseCount < MAX_USES) {
                 stackUseCount++;
                 stackTag.putInt(USE_COUNT_TAG, stackUseCount);
@@ -88,7 +82,7 @@ public class ManaCrystalItem extends Item {
 
             return InteractionResultHolder.success(stack);
         } else if (globalUseCount >= MAX_USES) {
-            // Send a message to the player on both sides
+
             player.displayClientMessage(Component.translatable("message.manacrystals.max_uses"), true);
             return InteractionResultHolder.fail(stack);
         }

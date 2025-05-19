@@ -34,7 +34,7 @@ public class ManaCrystalEventHandler {
 
         for (int i = 1; i <= globalUseCount; i++) {
             UUID uniqueUUID = UUID.nameUUIDFromBytes(("ManaCrystalManaIncrease" + i).getBytes());
-            modData.getInt(String.valueOf(MANA_INCREASE)); // Example value, replace with actual logic to determine the increase amount
+            modData.getInt(String.valueOf(MANA_INCREASE));
             AttributeModifier modifier = new AttributeModifier(uniqueUUID, "ManaCrystalManaIncrease", MANA_INCREASE, AttributeModifier.Operation.ADDITION);
             Objects.requireNonNull(player.getAttribute(AttributeRegistry.MAX_MANA.get())).addPermanentModifier(modifier);
         }

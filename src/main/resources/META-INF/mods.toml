@@ -1,0 +1,25 @@
+
+modLoader="javafml"
+loaderVersion = "[47,)"
+license = "All Rights Reserved"
+
+[[mods]]
+modId="manacrystals"
+version="1.0.0"
+displayName="Mana Crystals"
+authors="gobies"
+description='''mana crystals!'''
+
+[[dependencies.manacrystals]]
+modId="forge"
+mandatory=true
+versionRange="${forge_version_range}"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.manacrystals]]
+modId="minecraft"
+mandatory=true
+versionRange="${minecraft_version_range}"
+ordering="NONE"
+side= "BOTH"

@@ -1,0 +1,11 @@
+{
+  "mana_crystal_use": {
+    "subtitle": "subtitles.mana.crystal.use",
+    "sounds": [
+      {
+        "name": "manacrystals:mana_crystal_use",
+        "stream": false
+      }
+    ]
+  }
+}

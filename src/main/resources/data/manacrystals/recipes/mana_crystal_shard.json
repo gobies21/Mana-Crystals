@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "aaa",
+    "aaa",
+    "aaa"
+  ],
+  "key": {
+    "a": {
+      "item": "manacrystals:mana_dust"
+    }
+  },
+  "result": {
+    "item": "manacrystals:mana_shard",
+    "count": 1
+  }
+}

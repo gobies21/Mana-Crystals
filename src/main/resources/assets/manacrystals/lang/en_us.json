@@ -1,0 +1,11 @@
+{
+  "item.manacrystals.mana_crystal": "Mana Crystal",
+  "item.manacrystals.mana_shard": "Mana Crystal Shard",
+  "item.manacrystals.mana_dust": "Mana Dust",
+
+  "tooltip.manacrystal.item": "§6Increases maximum mana by §3+10",
+
+  "message.manacrystals.max_uses": "Maximum mana crystals consumed",
+
+  "subtitles.mana.crystal.use": "Mana Crystal"
+}

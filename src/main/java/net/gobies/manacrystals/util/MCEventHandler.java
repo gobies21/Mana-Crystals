@@ -13,7 +13,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Mod.EventBusSubscriber
-public class ManaCrystalEventHandler {
+public class MCEventHandler {
 
     @SubscribeEvent
     public static void onPlayerDeath(PlayerEvent.Clone event) {

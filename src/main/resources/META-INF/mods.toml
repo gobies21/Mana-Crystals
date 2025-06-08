@@ -5,7 +5,7 @@ license = "All Rights Reserved"
 
 [[mods]]
 modId="manacrystals"
-version="1.0.0"
+version="1.0.1"
 displayName="Mana Crystals"
 authors="gobies"
 description='''mana crystals!'''

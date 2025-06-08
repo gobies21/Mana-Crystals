@@ -6,12 +6,12 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-public class ManaCrystalSounds {
+public class MCSounds {
 
     public static final DeferredRegister<SoundEvent> REGISTRY;
     public static final RegistryObject<SoundEvent> ManaCrystalUse;
 
-    public ManaCrystalSounds() {
+    public MCSounds() {
     }
 
     static {

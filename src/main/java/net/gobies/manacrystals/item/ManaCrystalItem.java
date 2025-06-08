@@ -1,10 +1,10 @@
 package net.gobies.manacrystals.item;
 
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
+import net.gobies.manacrystals.Config;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -13,7 +13,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -27,15 +26,25 @@ import java.util.UUID;
 
 public class ManaCrystalItem extends Item {
     public ManaCrystalItem(Properties properties) {
-        super(new Properties().rarity(Rarity.EPIC));
+        super(properties);
     }
 
     private static final String USE_COUNT_TAG = "ManaCrystalUseCount";
     public static final String GLOBAL_USE_COUNT_TAG = "GlobalManaCrystalUseCount";
-    private static final int MAX_USES = 10;
-    public static final double MANA_INCREASE = 10.0;
     private static final long COOLDOWN_DURATION = 20;
     private static final String LAST_USE_TAG = "ManaCrystalLastUseTime";
+
+    private static int maxUses;
+    public static int getMaxUses() {
+        if (maxUses == 0) {
+            maxUses = Config.MANA_CRYSTAL_MAX_USES.get();
+        }
+        return maxUses;
+    }
+
+    public static double getManaIncrease() {
+        return Config.MANA_CRYSTAL_MANA_INCREASE.get();
+    }
 
     public @Nonnull InteractionResultHolder<ItemStack> use(@Nonnull Level level, @Nonnull Player player, @Nonnull InteractionHand handIn) {
         ItemStack stack = player.getItemInHand(handIn);
@@ -53,7 +62,7 @@ public class ManaCrystalItem extends Item {
             return InteractionResultHolder.fail(stack);
         }
 
-        if (globalUseCount < MAX_USES && !level.isClientSide) {
+        if (globalUseCount < getMaxUses() && !level.isClientSide) {
             globalUseCount++;
             modData.putInt(GLOBAL_USE_COUNT_TAG, globalUseCount);
             playerData.put("ManaCrystalModData", modData);
@@ -66,12 +75,12 @@ public class ManaCrystalItem extends Item {
                     new AttributeModifier(
                             uniqueUUID,
                             "ManaCrystalManaIncrease",
-                            MANA_INCREASE,
+                            getManaIncrease(),
                             AttributeModifier.Operation.ADDITION
                     )
             );
 
-            if (stackUseCount < MAX_USES) {
+            if (stackUseCount < getMaxUses()) {
                 stackUseCount++;
                 stackTag.putInt(USE_COUNT_TAG, stackUseCount);
             }
@@ -81,8 +90,7 @@ public class ManaCrystalItem extends Item {
             stack.shrink(1);
 
             return InteractionResultHolder.success(stack);
-        } else if (globalUseCount >= MAX_USES) {
-
+        } else if (globalUseCount >= getMaxUses()) {
             player.displayClientMessage(Component.translatable("message.manacrystals.max_uses"), true);
             return InteractionResultHolder.fail(stack);
         }

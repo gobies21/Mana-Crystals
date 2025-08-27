@@ -1,7 +1,7 @@
 package net.gobies.manacrystals.item;
 
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
-import net.gobies.manacrystals.Config;
+import net.gobies.manacrystals.CommonConfig;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -37,13 +37,13 @@ public class ManaCrystalItem extends Item {
     private static int maxUses;
     public static int getMaxUses() {
         if (maxUses == 0) {
-            maxUses = Config.MANA_CRYSTAL_MAX_USES.get();
+            maxUses = CommonConfig.MANA_CRYSTAL_MAX_USES.get();
         }
         return maxUses;
     }
 
     public static double getManaIncrease() {
-        return Config.MANA_CRYSTAL_MANA_INCREASE.get();
+        return CommonConfig.MANA_CRYSTAL_MANA_INCREASE.get();
     }
 
     public @Nonnull InteractionResultHolder<ItemStack> use(@Nonnull Level level, @Nonnull Player player, @Nonnull InteractionHand handIn) {
@@ -84,15 +84,17 @@ public class ManaCrystalItem extends Item {
                 stackUseCount++;
                 stackTag.putInt(USE_COUNT_TAG, stackUseCount);
             }
-            SoundEvent manaCrystalUse = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("manacrystals:mana_crystal_use"));
-            assert manaCrystalUse != null;
-            level.playSound(null, player.blockPosition(), Objects.requireNonNull(manaCrystalUse), SoundSource.PLAYERS, 1.0F, 1.0F);
-            stack.shrink(1);
 
-            return InteractionResultHolder.success(stack);
-        } else if (globalUseCount >= getMaxUses()) {
-            player.displayClientMessage(Component.translatable("message.manacrystals.max_uses"), true);
-            return InteractionResultHolder.fail(stack);
+            SoundEvent manaCrystalUse = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("manacrystals:mana_crystal_use"));
+            if (manaCrystalUse != null) {
+                level.playSound(null, player.blockPosition(), manaCrystalUse, SoundSource.PLAYERS, 1.0F, 1.0F);
+                stack.shrink(1);
+
+                return InteractionResultHolder.success(stack);
+            } else if (globalUseCount >= getMaxUses()) {
+                player.displayClientMessage(Component.translatable("message.manacrystals.max_uses"), true);
+                return InteractionResultHolder.fail(stack);
+            }
         }
 
         return InteractionResultHolder.fail(player.getItemInHand(handIn));

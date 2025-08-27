@@ -5,10 +5,10 @@ license = "All Rights Reserved"
 
 [[mods]]
 modId="manacrystals"
-version="1.0.1"
+version="1.0.5"
 displayName="Mana Crystals"
 authors="gobies"
-description='''mana crystals!'''
+description='''A way to increase max mana permanently in Minecraft!'''
 
 [[dependencies.manacrystals]]
 modId="forge"
@@ -23,3 +23,6 @@ mandatory=true
 versionRange="${minecraft_version_range}"
 ordering="NONE"
 side= "BOTH"
+
+[modproperties.manacrystals]
+configuredBackground="minecraft:textures/block/stone_bricks.png"

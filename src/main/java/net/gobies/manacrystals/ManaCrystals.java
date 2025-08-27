@@ -31,7 +31,7 @@ public class ManaCrystals {
 
         modBus.addListener(ManaCrystals::BuildContents);
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC);
     }
 
     @SubscribeEvent

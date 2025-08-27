@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "manacrystals:mana_crystal_shard"
+    }
+  ],
+  "result": {
+    "item": "manacrystals:mana_dust",
+    "count": 9
+  }
+}

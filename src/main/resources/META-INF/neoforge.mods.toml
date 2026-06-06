@@ -1,11 +1,11 @@
 
 modLoader="javafml"
-loaderVersion = "[47,)"
+loaderVersion = "${loader_version_range}"
 license = "All Rights Reserved"
 
 [[mods]]
 modId="manacrystals"
-version="1.0.6"
+version="1.1.0"
 displayName="Mana Crystals"
 authors="gobies"
 description='''A way to increase max mana permanently in Minecraft!'''

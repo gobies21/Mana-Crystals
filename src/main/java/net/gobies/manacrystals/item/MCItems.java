@@ -14,9 +14,6 @@ public class MCItems {
     public static final DeferredHolder<Item, Item> ManaCrystalShard;
     public static final DeferredHolder<Item, Item> ManaDust;
 
-    public MCItems() {
-    }
-
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

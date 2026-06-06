@@ -3,7 +3,6 @@ package net.gobies.manacrystals.util;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
@@ -19,10 +18,11 @@ public class LootTableHandler {
         ResourceLocation entityLocation = ResourceLocation.parse(location);
 
         if (lootTable.equals(entityLocation)) {
+            HolderLookup.Provider registries = event.getRegistries();
             LootPool.Builder poolBuilder = LootPool.lootPool()
                     .add(LootItem.lootTableItem(item)
                             .apply(SetItemCountFunction.setCount(UniformGenerator.between(minCount, maxCount)))
-                            .when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost((HolderLookup.Provider) Enchantments.LOOTING, baseDropChance, lootingBoostChance)));
+                            .when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, baseDropChance, lootingBoostChance)));
 
             event.getTable().addPool(poolBuilder.build());
         }

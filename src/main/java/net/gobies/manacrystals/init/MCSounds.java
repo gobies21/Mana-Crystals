@@ -11,9 +11,6 @@ public class MCSounds {
     public static final DeferredRegister<SoundEvent> REGISTRY;
     public static final DeferredHolder<SoundEvent, SoundEvent> ManaCrystalUse;
 
-    public MCSounds() {
-    }
-
     static {
         REGISTRY = DeferredRegister.create(Registries.SOUND_EVENT, "manacrystals");
         ManaCrystalUse = REGISTRY.register("mana_crystal_use", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.parse("manacrystals:mana_crystal_use")));

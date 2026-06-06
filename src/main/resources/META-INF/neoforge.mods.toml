@@ -5,15 +5,15 @@ license = "All Rights Reserved"
 
 [[mods]]
 modId="manacrystals"
-version="1.0.5"
+version="1.0.6"
 displayName="Mana Crystals"
 authors="gobies"
 description='''A way to increase max mana permanently in Minecraft!'''
 
 [[dependencies.manacrystals]]
-modId="forge"
+modId="neoforge"
 mandatory=true
-versionRange="${forge_version_range}"
+versionRange="${neo_version_range}"
 ordering="NONE"
 side="BOTH"
 

@@ -4,14 +4,12 @@ import com.mojang.logging.LogUtils;
 import io.redspace.ironsspellbooks.registries.CreativeTabRegistry;
 import net.gobies.manacrystals.init.MCSounds;
 import net.gobies.manacrystals.item.MCItems;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import org.slf4j.Logger;
 
 @Mod(ManaCrystals.MOD_ID)
@@ -20,18 +18,14 @@ public class ManaCrystals {
     public static final String MOD_ID = "manacrystals";
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public ManaCrystals() {
-        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
-
-        MinecraftForge.EVENT_BUS.register(this);
-
+    public ManaCrystals(IEventBus modBus, ModContainer container) {
         MCItems.register(modBus);
 
         MCSounds.REGISTRY.register(modBus);
 
         modBus.addListener(ManaCrystals::BuildContents);
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC);
+        container.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC);
     }
 
     @SubscribeEvent

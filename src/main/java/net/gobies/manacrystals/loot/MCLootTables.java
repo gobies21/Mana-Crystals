@@ -4,12 +4,12 @@ import net.gobies.manacrystals.CommonConfig;
 import net.gobies.manacrystals.ManaCrystals;
 import net.gobies.manacrystals.item.MCItems;
 import net.gobies.manacrystals.util.LootTableHandler;
-import net.minecraftforge.event.LootTableLoadEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.LootTableLoadEvent;
 
-@Mod.EventBusSubscriber(modid = ManaCrystals.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(modid = ManaCrystals.MOD_ID)
 public class MCLootTables {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

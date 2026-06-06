@@ -13,6 +13,8 @@ import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.Collection;
+
 @Mod.EventBusSubscriber(modid = ManaCrystals.MOD_ID)
 public class MCCommands {
     @SubscribeEvent
@@ -57,7 +59,7 @@ public class MCCommands {
         );
     }
 
-    private static int modifyCrystals(CommandSourceStack source, java.util.Collection<ServerPlayer> targets, int amount, String action) {
+    private static int modifyCrystals(CommandSourceStack source, Collection<ServerPlayer> targets, int amount, String action) {
         int maxUses = ManaCrystalItem.getMaxUses();
         for (ServerPlayer player : targets) {
             int current = ManaCrystalItem.getManaCrystalUses(player);

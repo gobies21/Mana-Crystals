@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "manacrystals:mana_crystal_shard"
+      "item": "manacrystals:mana_shard"
     }
   ],
   "result": {

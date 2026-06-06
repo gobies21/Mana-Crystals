@@ -7,7 +7,7 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 @Mod.EventBusSubscriber(modid = ManaCrystals.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CommonConfig {
-    private static final String FILENAME = "apothecary-common.toml";
+    private static final String FILENAME = "manacrystals-common.toml";
 
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     public static final ForgeConfigSpec SPEC;
@@ -19,17 +19,12 @@ public class CommonConfig {
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ADDITIONAL_LOOT;
     public static boolean enable_additional_loot;
 
-    public CommonConfig() {
-    }
-
-
     @SubscribeEvent
     static void onLoad(ModConfigEvent.Loading configEvent) {
         if (configEvent.getConfig().getFileName().equals(FILENAME)) {
             mana_crystal_mana_gain = MANA_CRYSTAL_MANA_INCREASE.get().floatValue();
             mana_crystal_max_uses = MANA_CRYSTAL_MAX_USES.get();
             enable_additional_loot = ENABLE_ADDITIONAL_LOOT.get();
-
         }
     }
 

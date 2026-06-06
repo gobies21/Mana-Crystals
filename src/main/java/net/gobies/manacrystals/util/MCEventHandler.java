@@ -1,40 +1,38 @@
 package net.gobies.manacrystals.util;
 
-import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import net.gobies.manacrystals.item.ManaCrystalItem;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.Objects;
-import java.util.UUID;
 
 @Mod.EventBusSubscriber
 public class MCEventHandler {
 
     @SubscribeEvent
-    public static void onPlayerDeath(PlayerEvent.Clone event) {
-        CompoundTag oldPlayerData = event.getOriginal().getPersistentData();
-        CompoundTag modData = oldPlayerData.getCompound("ManaCrystalModData");
-        event.getEntity().getPersistentData().put("ManaCrystalModData", modData);
+    public static void onPlayerClone(PlayerEvent.Clone event) {
+        if (!(event.getEntity() instanceof ServerPlayer newPlayer)) return;
+        ServerPlayer oldPlayer = (ServerPlayer) event.getOriginal();
+        int crystalUses = ManaCrystalItem.getManaCrystalUses(oldPlayer);
+        newPlayer.getPersistentData().putInt(ManaCrystalItem.MANA_CRYSTAL_USES, crystalUses);
+
+        if (!event.isWasDeath()) {
+            ManaCrystalItem.applyManaBonus(newPlayer);
+        }
     }
 
     @SubscribeEvent
     public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
-        CompoundTag playerData = event.getEntity().getPersistentData();
-        CompoundTag modData = playerData.getCompound("ManaCrystalModData");
-        int globalUseCount = modData.getInt(ManaCrystalItem.GLOBAL_USE_COUNT_TAG);
+        if (event.getEntity() instanceof ServerPlayer player) {
+            ManaCrystalItem.applyManaBonus(player);
+        }
+    }
 
-        Player player = event.getEntity();
-
-        for (int i = 1; i <= globalUseCount; i++) {
-            UUID uniqueUUID = UUID.nameUUIDFromBytes(("ManaCrystalManaIncrease" + i).getBytes());
-            modData.getInt(String.valueOf(ManaCrystalItem.getManaIncrease()));
-            AttributeModifier modifier = new AttributeModifier(uniqueUUID, "ManaCrystalManaIncrease", ManaCrystalItem.getManaIncrease(), AttributeModifier.Operation.ADDITION);
-            Objects.requireNonNull(player.getAttribute(AttributeRegistry.MAX_MANA.get())).addPermanentModifier(modifier);
+    @SubscribeEvent
+    public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            ManaCrystalItem.applyManaBonus(player);
         }
     }
 }

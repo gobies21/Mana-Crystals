@@ -15,7 +15,7 @@
       }
   },
   "result": {
-    "item": "manacrystals:mana_dust",
+    "id": "manacrystals:mana_dust",
     "count": 9
   }
 }

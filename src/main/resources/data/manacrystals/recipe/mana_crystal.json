@@ -12,7 +12,7 @@
     }
   },
   "result": {
-    "item": "manacrystals:mana_crystal",
+    "id": "manacrystals:mana_crystal",
     "count": 1
   }
 }

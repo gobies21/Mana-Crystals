@@ -12,7 +12,7 @@
     }
   },
   "result": {
-    "item": "manacrystals:mana_shard",
+    "id": "manacrystals:mana_shard",
     "count": 1
   }
 }

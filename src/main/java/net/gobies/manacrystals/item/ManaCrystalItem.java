@@ -71,18 +71,25 @@ public class ManaCrystalItem extends Item {
         if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
             int currentUses = getManaCrystalUses(serverPlayer);
             int maxUsesLimit = getMaxUses();
+            int experienceCost = CommonConfig.MANA_CRYSTAL_EXPERIENCE_COST.get();
 
             if (currentUses < maxUsesLimit) {
-                int totalUses = currentUses + 1;
-                serverPlayer.getPersistentData().putInt(MANA_CRYSTAL_USES, totalUses);
+                if (serverPlayer.experienceLevel >= experienceCost) {
+                    int totalUses = currentUses + 1;
+                    serverPlayer.getPersistentData().putInt(MANA_CRYSTAL_USES, totalUses);
 
-                applyManaBonus(serverPlayer);
+                    serverPlayer.setExperienceLevels(serverPlayer.experienceLevel - experienceCost);
 
-                SoundEvent manaCrystalUse = MCSounds.ManaCrystalUse.get();
-                level.playSound(null, serverPlayer.blockPosition(), manaCrystalUse, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    applyManaBonus(serverPlayer);
 
-                stack.shrink(1);
-                return InteractionResultHolder.success(stack);
+                    SoundEvent manaCrystalUse = MCSounds.ManaCrystalUse.get();
+                    level.playSound(null, serverPlayer.blockPosition(), manaCrystalUse, SoundSource.PLAYERS, 1.0F, 1.0F);
+
+                    stack.shrink(1);
+                    return InteractionResultHolder.success(stack);
+                } else {
+                    player.displayClientMessage(Component.translatable("message.manacrystals.experience"), true);
+                }
             } else {
                 serverPlayer.displayClientMessage(Component.translatable("message.manacrystals.max_uses"), true);
                 return InteractionResultHolder.fail(stack);

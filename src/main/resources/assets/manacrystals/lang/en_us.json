@@ -6,6 +6,7 @@
   "tooltip.manacrystal.item": "§6Increases maximum mana by §3+10",
 
   "message.manacrystals.max_uses": "Maximum mana crystals consumed",
+  "message.manacrystals.experience": "Not enough experience!",
 
   "subtitles.mana.crystal.use": "Mana Crystal"
 }
